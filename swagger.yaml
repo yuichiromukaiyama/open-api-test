@@ -1,0 +1,55 @@
+openapi: 3.0.3
+info:
+  title: open-api-test
+  description: blank
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.11
+servers:
+  - url: http://localhost:3000
+tags:
+  - name: test
+paths:
+  /test:
+    get:
+      tags:
+        - test
+      summary: get test
+      operationId: getTest
+      responses:
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                oneOf: 
+                  - $ref: '#/components/schemas/AAA'
+                  - $ref: '#/components/schemas/BBB'
+                discriminator:
+                  propertyName: type
+                  mapping:
+                    aaa: '#/components/schemas/AAA'
+                    bbb: '#/components/schemas/BBB'
+components:
+  schemas:
+    AAA:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    BBB:
+      type: object
+      required: 
+        - id
+        - label
+      properties:
+        id:
+          type: string
+        label:
+          type: string
